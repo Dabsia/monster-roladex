@@ -1,12 +1,18 @@
 import React, {Component} from 'react'
 import Cardlist from './components/card-list/Cardlist'
-
+import './App.css';
+import SearchBox from './components/searchbox/SearchBox.component';
 class App extends Component{
   constructor(){
     super();
     this.state = {
-      monsters : []
+      monsters : [],
+      searchfield : ''
     }
+  }
+
+  onInputChange = (e) =>{
+    this.setState({searchfield: e.target.value})
   }
 
   componentDidMount(){
@@ -16,10 +22,20 @@ class App extends Component{
   }
 
   render(){
-   const {monsters} = this.state
+
+   const {monsters, searchfield} = this.state;
+
+  const filteredMonsters = monsters.filter(monster => (
+    monster.name.toLowerCase().includes(searchfield.toLowerCase())))
+
+
     return(
       <div className="App">
-        <Cardlist monsters = {monsters}/>  
+        <SearchBox 
+        searchfield = {this.onInputChange}
+        placeholder = 'Search Monsters'
+        />
+        <Cardlist monsters = {filteredMonsters}/>  
       </div>
       
     )
@@ -28,3 +44,17 @@ class App extends Component{
 }
 
 export default App;
+
+// STATE VS PROPS
+
+// It is passed down as an attribute  s
+// state can be passed down as props  to a component
+
+//  State most times lives in the App component
+// State changes because of user interaction.
+
+// If you want console.log() the value of your state without it being async, do this:
+//  this.setState({searchfield: e.target.value}, () => console.log(this.state))
+// It gets called right after the setState function has ran.
+
+// setState is an Asynchronous function call
