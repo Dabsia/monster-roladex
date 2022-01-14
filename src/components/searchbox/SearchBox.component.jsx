@@ -11,3 +11,12 @@ function SearchBox({placeholder, searchfield}){
 
 
 export default SearchBox;
+
+// Because of one way dataflow, we put the state of the searchBox in the app component
+// 
+
+// props and state cant move from children to parent bt parent to child
+
+// this.handleChange = this.handleChange.bind(this)
+// The above code should be placed in the constructor function
+// And is used to reference the function in the class Object

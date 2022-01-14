@@ -19,6 +19,7 @@ class App extends Component{
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(res => res.json())
     .then(data => this.setState({monsters: data}))
+    .catch(err => console.log('Failed to fetch monsters'))
   }
 
   render(){
@@ -29,8 +30,11 @@ class App extends Component{
     monster.name.toLowerCase().includes(searchfield.toLowerCase())))
 
 
-    return(
+    return !(monsters.length) ?
+    <h1 style = {{textAlign: 'center', color: '#fff'}}>Loading...</h1>
+    :
       <div className="App">
+        <h1 className='title'>MONSTERS ROLODEX</h1>
         <SearchBox 
         searchfield = {this.onInputChange}
         placeholder = 'Search Monsters'
@@ -38,10 +42,13 @@ class App extends Component{
         <Cardlist monsters = {filteredMonsters}/>  
       </div>
       
-    )
+    
   }
   
 }
+
+
+
 
 export default App;
 
